@@ -1,0 +1,24 @@
+h2. abc
+
+!http://www.jeffbots.com/judgedredd1.jpg!
+
+**abc** is a Ruby library for working with music notation in the "abc format":abcnotation.
+
+h3. Installation
+
+**abc.rb** relies on the following dependencies;
+
+* "abcm2ps":abcm2ps a command line library for converting abc notation into traditional music representation on a stave in postscript format.
+
+    wget http://moinejf.free.fr/abcm2ps-5.9.3.tar.gz
+    tar -xzf abcm2ps-5.9.3.tar.gz
+    cd abcm2ps-5.9.3
+    make
+    sudo make install
+    
+* "ghostscript":gs an interpreter for the postscript language, we use it to transform the postscript file into a format that is easier for the web.
+
+
+[abcm2ps]http://moinejf.free.fr/
+[abcnotation]http://abcnotation.org.uk/
+[gs]http://pages.cs.wisc.edu/~ghost/
