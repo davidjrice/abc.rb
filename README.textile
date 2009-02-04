@@ -1,4 +1,4 @@
-h2. abc
+h2. abc.rb
 
 !http://www.jeffbots.com/judgedredd1.jpg!
 
@@ -10,12 +10,16 @@ h3. Installation
 
 * "abcm2ps":abcm2ps a command line library for converting abc notation into traditional music representation on a stave in postscript format.
 
+<pre>
+  <code>
     wget http://moinejf.free.fr/abcm2ps-5.9.3.tar.gz
     tar -xzf abcm2ps-5.9.3.tar.gz
     cd abcm2ps-5.9.3
     make
     sudo make install
-    
+  </code>
+</pre>
+
 * "ghostscript":gs an interpreter for the postscript language, we use it to transform the postscript file into a format that is easier for the web.
 
 
