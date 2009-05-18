@@ -26,7 +26,7 @@ module Abc
       raise InvalidInputException.new("Supplied input is not valid abc notation") unless match
       #File.expand_path(match[1])
     
-      ps_to_png #requires Out.ps and out.png to 'exist' or be creatable respectively.
+      return ps_to_png #requires Out.ps and out.png to 'exist' or be creatable respectively.
     end
     
     def convert(notation)
@@ -43,14 +43,15 @@ module Abc
     
     def ps_to_png
       #GHOSTSCRIPT MANUAL PDF ==> http://noodle.med.yale.edu/latex/gs/gs5man_e.pdf
-      #GHOSTSCRIPT CONVERT TO PNG COMMAND
+      #CONVERT TO PNG COMMAND ==> gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=out%d.png Out.ps
       #nb: %d creates page numbers - handle this!
       output = ""
       Open3.popen3("gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=out%d.png Out.ps") do |stdin, stdout, stderr|
         stdin.close
-        output << stderr.read
+        output << stderr.read << stdout.read
       end
-      return output #puts system "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=out%d.png Out.ps" 
+      match = output.match(/(done)/)
+      return match[1]
     end
     
     private
