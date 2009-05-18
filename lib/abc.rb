@@ -24,9 +24,10 @@ module Abc
       output = convert(notation)
       match = output.match(/Output written on (.*) \(/)
       raise InvalidInputException.new("Supplied input is not valid abc notation") unless match
-      File.expand_path(match[1])
+      #File.expand_path(match[1])
+    
+      ps_to_png output
     end
-      
     
     def convert(notation)
       determine_dependencies
@@ -38,6 +39,13 @@ module Abc
         output << stderr.read
       end
       return output
+    end
+    
+    def ps_to_png(ps)
+      #GHOSTSCRIPT MANUAL PDF
+      # ==> http://noodle.med.yale.edu/latex/gs/gs5man_e.pdf
+      #GHOSTSCRIPT CONVERT TO PNG COMMAND
+      puts system "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=out.png Out.ps"
     end
     
     private
