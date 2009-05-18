@@ -37,6 +37,6 @@ describe Abc do
     ABAG EGAB|cBAc BAG2|A4 A4:|
     SRC
     
-    Abc.to_png(kitchen_girl).should == "/Users/dave/web/abcrb/Out.ps"
+    Abc.to_png(kitchen_girl).should == "/Users/dave/web/abcrb/out.png"
   end
 end
