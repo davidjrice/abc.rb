@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Abc do
   
+
   it "should determine abcm2ps path" do
     Abc.abcm2ps_path.should == "/usr/local/bin/abcm2ps"
   end
@@ -38,17 +39,17 @@ describe Abc do
     
     inputname = "KitchenGirl"
     
-    Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/) #should == "/Users/dave/abc/Out.ps"
+    Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/)
   end
   
-  it "should fail without an inputname"
+  it "should fail without an inputname" do
+    pending
+  end
+  
   it "should fail with invalid input" do
-    kitchen_girl = <<-SRC
-      My name is jenny and i sit by the phone waiting on a call from teh president.
-    SRC
+    kitchen_girl = {:test=>"invalid_data"}
     
     inputname = "KitchenGirl"
-    
-    Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/) #should == "/Users/dave/abc/Out.ps"
+    Abc.to_png(inputname, kitchen_girl).should_not match(/(.*).png(.*)/)
   end
 end

@@ -23,6 +23,8 @@ module Abc
     end
     
     def to_png(identifier, notation)
+      cleanup 
+      
       output = convert(notation)
       match = output.match(/Output written on (.*) \(/)
       raise InvalidInputException.new("Supplied input is not valid abc notation") unless match
@@ -30,6 +32,8 @@ module Abc
       output = ps_to_png identifier, File.expand_path(match[1])
       match = output.match(/fail (.*)\(/)
       raise InvalidInputException.new("PNG creation not confirmed" + output) if match
+      
+      cleanup
       
       return output
     end
@@ -58,16 +62,28 @@ module Abc
       end
       
       x = Tempfile.new(identifier + ".png")
+
+      File.new(outputname, 'w') unless File.exist?(outputname)
+
       File.open(outputname) do |input_file|
         x.write input_file.readlines
       end
 
       x.rewind
       x.close
+      File.unlink(inputname)
+      File.unlink(outputname)
+      
       return x.path #This is the temporary file's location on the system. #TODO: does this need to be destroy/released by system? where?
     end
     
     private
+    
+    def cleanup
+      #trash ps and png files if they exist
+      File.delete("Out.ps") if File.exist?("Out.ps")
+      File.delete("temp.png") if File.exist?("temp.png")
+    end
     
     def determine_dependencies
       return if @abcm2ps_path && @gs_path
