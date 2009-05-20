@@ -7,7 +7,7 @@ describe Abc do
   end
   
   it "should determine gs path" do
-    Abc.gs_path.should == "/opt/local/bin/gs"
+    Abc.gs_path.should == "/usr/local/bin/gs"
   end
   
   it "should convert 'Kitchen Girl' to png" do
@@ -36,6 +36,8 @@ describe Abc do
     ABAG EGAB|cBAc BAG2|A4 A4:|
     SRC
     
-    Abc.to_png(kitchen_girl).should == "/Users/dave/abc/Out.ps"
+    inputname = "KitchenGirl"
+    
+    Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/) #should == "/Users/dave/abc/Out.ps"
   end
 end
