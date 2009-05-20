@@ -27,7 +27,7 @@ module Abc
       match = output.match(/Output written on (.*) \(/)
       raise InvalidInputException.new("Supplied input is not valid abc notation") unless match
       
-      output = ps_to_png identifier, File.expand_path(match[1]) #requires Out.ps and out.png to 'exist' or be creatable respectively.
+      output = ps_to_png identifier, File.expand_path(match[1])
       match = output.match(/fail (.*)\(/)
       raise InvalidInputException.new("PNG creation not confirmed" + output) if match
       
@@ -48,7 +48,7 @@ module Abc
     
     def ps_to_png(identifier, inputfilename)
       #GHOSTSCRIPT MANUAL PDF ==> http://noodle.med.yale.edu/latex/gs/gs5man_e.pdf
-      #GHOSTSCRIPT CONVERT TO PNG COMMAND
+      #GHOSTSCRIPT CONVERT TO PNG COMMAND ==> gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=#{outputname} #{inputname}
       output = ""
       inputname = inputfilename
       outputname = "temp.png"
@@ -56,20 +56,15 @@ module Abc
         stdin.close
         output << stderr.read << "\n " + stdout.read
       end
-      #return File.expand_path(outputname)
       
       x = Tempfile.new(identifier + ".png")
       File.open(outputname) do |input_file|
         x.write input_file.readlines
       end
-      #x.write "hello there" #File.open(outputname).readlines
+
       x.rewind
       x.close
-      #post :service_x,:file=>x,value=>"x"
-      puts "out " + x.path
-      return x.path
-      #return File.open(outputname).read
-       #"File output as #{outputname + output}" #puts system "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=out%d.png Out.ps" 
+      return x.path #This is the temporary file's location on the system. #TODO: does this need to be destroy/released by system? where?
     end
     
     private

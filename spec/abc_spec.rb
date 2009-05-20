@@ -40,4 +40,15 @@ describe Abc do
     
     Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/) #should == "/Users/dave/abc/Out.ps"
   end
+  
+  it "should fail without an inputname"
+  it "should fail with invalid input" do
+    kitchen_girl = <<-SRC
+      My name is jenny and i sit by the phone waiting on a call from teh president.
+    SRC
+    
+    inputname = "KitchenGirl"
+    
+    Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/) #should == "/Users/dave/abc/Out.ps"
+  end
 end
