@@ -31,7 +31,7 @@ h3. Installation
 h3. Example usage 0.0.1
 
 <pre><code>
-Abc.to_png  kitchen_girl = <<-SRC
+Abc.to_png "KitchenGirl", kitchen_girl = <<-SRC
     M:4/4
     O:I
     R:R
