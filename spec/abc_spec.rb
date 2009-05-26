@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Abc do
   
-
   it "should determine abcm2ps path" do
     Abc.abcm2ps_path.should == "/usr/local/bin/abcm2ps"
   end
@@ -47,6 +46,8 @@ describe Abc do
   end
   
   it "should fail with invalid input" do
+    #How important is this?  What actually will break abc2mps?  What is invalid ABC notation? 
+    pending
     kitchen_girl = {:test=>"invalid_data"}
     
     inputname = "KitchenGirl"
