@@ -56,7 +56,7 @@ module Abc
       output = ""
       inputname = inputfilename
       outputname = "temp.png"
-      Open3.popen3("gs -dSAFER -aaliastext -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=#{outputname} #{inputname}") do |stdin, stdout, stderr|
+      Open3.popen3("gs -dSAFER -crop s -aaliastext -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=#{outputname} #{inputname}") do |stdin, stdout, stderr|
         stdin.close
         output << stderr.read << "\n " + stdout.read
       end
@@ -71,8 +71,8 @@ module Abc
 
       x.rewind
       x.close
-      File.unlink(inputname)
-      File.unlink(outputname)
+      File.unlink(inputname) if File.exist?(inputname)
+      File.unlink(outputname) if File.exist?(outputname)
       
       return x.path #This is the temporary file's location on the system. #TODO: does this need to be destroy/released by system? where?
     end
