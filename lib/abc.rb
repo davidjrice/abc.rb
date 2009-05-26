@@ -56,7 +56,7 @@ module Abc
       output = ""
       inputname = inputfilename
       outputname = "temp.png"
-      Open3.popen3("gs -dSAFER -crop s -aaliastext -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=#{outputname} #{inputname}") do |stdin, stdout, stderr|
+      Open3.popen3("gs -dSAFER -aaliastext -dBATCH -dNOPAUSE -sDEVICE=png16m -dGraphicsAlphaBits=4 -sOutputFile=#{outputname} #{inputname}") do |stdin, stdout, stderr|
         stdin.close
         output << stderr.read << "\n " + stdout.read
       end

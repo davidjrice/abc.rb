@@ -2,16 +2,9 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Abc do
   
-  it "should determine abcm2ps path" do
-    Abc.abcm2ps_path.should == "/usr/local/bin/abcm2ps"
-  end
-  
-  it "should determine gs path" do
-    Abc.gs_path.should == "/usr/local/bin/gs"
-  end
-  
-  it "should convert 'Kitchen Girl' to png" do
-    kitchen_girl = <<-SRC
+  before(:all) do
+    @inputname = "KitchenGirl"
+    @kitchen_girl = <<-SRC
     M:4/4
     O:I
     R:R
@@ -35,14 +28,26 @@ describe Abc do
     ABcA BAGB|ABAG EDEG|A2AB c2d2|e3f edcB|ABcA BAGB|
     ABAG EGAB|cBAc BAG2|A4 A4:|
     SRC
-    
-    inputname = "KitchenGirl"
-    
-    Abc.to_png(inputname, kitchen_girl).should match(/(.*).png(.*)/)
+  end
+  
+  it "should determine abcm2ps path" do
+    Abc.abcm2ps_path.should == "/usr/local/bin/abcm2ps"
+  end
+  
+  it "should determine gs path" do
+    Abc.gs_path.should == "/usr/local/bin/gs"
+  end
+  
+  it "should convert 'Kitchen Girl' to png" do
+    Abc.to_png(@inputname, @kitchen_girl).should match(/(.*).png(.*)/)
   end
   
   it "should fail without an inputname" do
     pending
+  end
+  
+  it "should be more than zero byes" do
+    File.size(Abc.to_png(@inputname, @kitchen_girl)).should_not == 0
   end
   
   it "should fail with invalid input" do
@@ -51,6 +56,6 @@ describe Abc do
     kitchen_girl = {:test=>"invalid_data"}
     
     inputname = "KitchenGirl"
-    Abc.to_png(inputname, kitchen_girl).should_not match(/(.*).png(.*)/)
+    Abc.to_png(@inputname, @kitchen_girl).should_not match(/(.*).png(.*)/)
   end
 end
